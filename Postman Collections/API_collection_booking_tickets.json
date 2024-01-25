@@ -1,0 +1,348 @@
+{
+	"info": {
+		"_postman_id": "f01e81fe-8611-41bb-b169-5d8ba2ed38fd",
+		"name": "Booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create new booking ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1dae5e85-8d8f-4eeb-a50a-78e1d86d6261",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set('ID', jsonData.bookingid)\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 1 second\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test('Post method Work', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('POST code Matched', function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Status code Name\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							" pm.test('Check ID accept only Number Data Type ', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.bookingid).to.be.a(\"number\");\r",
+							"})\r",
+							" \r",
+							"\r",
+							" pm.test('Check name accept only String Data Type ', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.booking.firstname).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"pm.test('Check Price accept only number Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.booking.totalprice).to.be.a(\"number\");\r",
+							"})\r",
+							"\r",
+							"pm.test('Check booking dates accept only String Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.booking.bookingdates.checkin).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"pm.test('Check additional needs accept only String Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.booking.additionalneeds).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "95f77c5b-2b4c-4d93-ad49-5009dc552014",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstname\" : \"Jim\",\r\n\t\"lastname\" : \"Brown\",\r\n\t\"totalprice\" : 111,\r\n\t\"depositpaid\" : true,\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"2018-01-01\",\r\n    \t\"checkout\" : \"2019-01-01\"\r\n\t},\r\n\t\"additionalneeds\" : \"Breakfast\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}/booking/",
+				"description": "### Create a New Booking\n\nThis endpoint allows you to create a new booking.\n\n**HTTP Request**\n\n`POST {{URL}}/booking/`\n\n**Request Body**\n\n- `firstname` (string, required): The first name of the guest.\n- `lastname` (string, required): The last name of the guest.\n- `totalprice` (number, required): The total price of the booking.\n- `depositpaid` (boolean, required): Indicates if the deposit has been paid.\n- `bookingdates` (object, required): The check-in and check-out dates for the booking.\n    - `checkin` (string, required): The check-in date.\n    - `checkout` (string, required): The check-out date.\n- `additionalneeds` (string, optional): Any additional needs or requests for the booking.\n    \n\n**Response**\n\n- Status: 200 OK\n- `bookingid` (number): The ID of the newly created booking.\n- `booking` (object): The details of the newly created booking, including the guest's information, total price, deposit status, booking dates, and additional needs."
+			},
+			"response": []
+		},
+		{
+			"name": "Pull booking Information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c53791d2-8ced-4659-b97d-28328f1ee892",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test('Response time is less than 1 second', function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"})\r",
+							"\r",
+							"pm.test('Get method Work', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Get code Matched', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Check Status code name', function () {\r",
+							"    pm.response.to.have.status('OK');\r",
+							"})\r",
+							"\r",
+							"\r",
+							"pm.test('Check name accept only String Data Type ', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.firstname).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"pm.test('Check Price accept only number Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.totalprice).to.be.a(\"number\");\r",
+							"})\r",
+							"\r",
+							"pm.test('Check booking dates accept only String Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.bookingdates.checkin).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"pm.test('Check additional needs accept only String Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"   pm.expect(jsonData.additionalneeds).to.be.a(\"string\");\r",
+							"})\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "5f2e79f5-927c-4328-b9cf-5dd317f1eb31",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}/booking/{{ID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Token Genarete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7a8ea6c-a144-4da2-9d47-ab1646213fd1",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"Token\",jsonData.token);\r",
+							"\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Whether it is an Authenticated Request\", function () {\r",
+							"    pm.expect(jsonData.token).to.eql(pm.environment.get(\"Token\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "644d6511-0e5f-42ba-81df-bed8030014a4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"admin\",\r\n\t\"password\": \"password123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}/auth"
+			},
+			"response": []
+		},
+		{
+			"name": "Update the Information",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ac98cd6f-39fc-4978-a7c5-9e9961dbcf4c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "823cf0d3-691c-44fe-917a-db375a906fe1",
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test('Response time is less than 1 second', function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"})\r",
+							"\r",
+							"pm.test('Get method Work', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Get code Matched', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Check Status code name', function () {\r",
+							"    pm.response.to.have.status('OK');\r",
+							"})\r",
+							"\r",
+							"pm.test('Check name accept only String Data Type ', function () {\r",
+							"    pm.expect(jsonData.firstname).to.be.a('string');\r",
+							"})\r",
+							"\r",
+							"pm.test('Check Price accept only number Data Type', function () {\r",
+							"    pm.expect(pm.response.json().totalprice).to.be.a('number');\r",
+							"})\r",
+							"\r",
+							"pm.test('Check booking dates accept only String Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData.bookingdates.checkin).to.be.a('string');\r",
+							"})\r",
+							"\r",
+							"pm.test('Check additional needs accept only String Data Type', function () {\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData.additionalneeds).to.be.a('string');\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "b6bf1483-e72d-46e7-9b55-ffcffc61c3df",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Sabbir\",\r\n    \"lastname\": \"Mamun\",\r\n    \"totalprice\": 111,\r\n    \"depositpaid\": true,\r\n    \"bookingdates\": {\r\n        \"checkin\": \"2018-01-01\",\r\n        \"checkout\": \"2019-01-01\"\r\n    },\r\n    \"additionalneeds\": \"Breakfast\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{URL}}/booking/{{ID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete booking Information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f7b624c4-aecb-45cf-9c13-48e1d25308d4",
+						"exec": [
+							"pm.test(\"Response time is less than 1 second\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test('Delete method Work', function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"\r",
+							"pm.test('Delete code Matched', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Status code Name Matched\", function () {\r",
+							"    pm.response.to.have.status(\"Delete\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "18aef269-ec5a-4213-8eab-acc1439fae6b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{Token}}",
+						"type": "text"
+					}
+				],
+				"url": "{{URL}}/booking/{{ID}}"
+			},
+			"response": []
+		}
+	]
+}
